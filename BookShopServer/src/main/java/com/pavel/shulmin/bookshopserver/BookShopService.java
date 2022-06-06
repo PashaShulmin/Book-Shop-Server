@@ -4,7 +4,6 @@ import com.pavel.shulmin.bookshopserver.domain.*;
 import com.pavel.shulmin.bookshopserver.model.Deal;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -33,7 +32,7 @@ public class BookShopService {
         return receivedMarket;
     }
 
-    public void makeDeal(Deal deal) {
+    public BigDecimal makeDeal(Deal deal) {
         Product productById = bookShopRepository.getProductById(deal.getId());
         if (productById == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -48,7 +47,9 @@ public class BookShopService {
         }
         Market updatedMarket = bookShopRepository.getMarket().removeCountById(deal.getId(), deal.getAmount());
         Account updatedAccount = bookShopRepository.getAccount().addItem(new Item(productById.getBook(), deal.getAmount()));
+        updatedAccount.setBalance(updatedAccount.getBalance().subtract(totalCost));
         bookShopRepository.setMarket(updatedMarket);
         bookShopRepository.setAccount(updatedAccount);
+        return updatedAccount.getBalance();
     }
 }

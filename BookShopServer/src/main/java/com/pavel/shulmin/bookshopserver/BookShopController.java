@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 public class BookShopController {
 
@@ -27,7 +29,7 @@ public class BookShopController {
     }
 
     @PostMapping("/market/deal")
-    public void deal(@RequestBody Deal deal) {
-        bookShopService.makeDeal(deal);
+    public BigDecimal deal(@RequestBody Deal deal) {
+        return bookShopService.makeDeal(deal);
     }
 }

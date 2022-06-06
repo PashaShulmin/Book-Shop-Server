@@ -1,8 +1,8 @@
 package com.pavel.shulmin.bookshopserver.model;
 
 public class Deal {
-    private long id;
-    private int amount;
+    private final long id;
+    private final int amount;
 
     public Deal(long id, int amount) {
         this.id = id;
@@ -13,15 +13,7 @@ public class Deal {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public int getAmount() {
         return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 }
